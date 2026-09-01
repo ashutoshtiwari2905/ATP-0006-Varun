@@ -14,6 +14,8 @@ During the survey, onboard sensing systems collect information related to the pr
 
 The collected sensor data can then be processed and represented as a **spatial heat map**, providing a visual representation of areas with higher or lower detected metallic activity. The vehicle is designed with a focus on **low-cost construction, modularity, stability, and practical underwater operation**, making it suitable as a prototype platform for underwater surveying and exploration.
 
+![Mapping_Geometry](medias/Mapping_Geometry.png)
+
 ## What is VARUN?
 
 VARUN is a compact underwater ROV consisting of:
@@ -39,53 +41,21 @@ The vehicle is intended to operate **a few inches above the seabed**, rather tha
 
 VARUN is designed around a **Boustrophedon (lawnmower) pattern survey strategy**.
 
+![Lawnmover_Pattern](medias/Lawnmower_Horizontal.jpeg)
+![Lawnmover_Pattern_2](medias/Lawnmower_Vertical.jpeg)
+
 The vehicle moves along parallel passes across the selected survey area, periodically changing its heading at the end of each pass. This approach provides structured coverage of the seabed and reduces the possibility of unintentionally leaving large gaps between surveyed regions.
 
 While moving through the survey area, the detection system continuously records measurements along with the vehicle's estimated **position, motion and orientation, depth, seabed distance, and surrounding water temperature**.
 
 These measurements can subsequently be converted into a spatial representation such as a **heat map**, where different regions of the surveyed area represent different levels of detected metallic activity.
 
+![Heat_Map_Sample](medias/Heat_Map_Sample.jpeg)
+![Heat_Map_Sample_2](medias/Heat_Map_Sample%20(2).jpeg)
+
 ### Simplified Survey Flow
 
-```text
-        Start
-          │
-          ▼
-   Descend to seabed
-          │
-          ▼
- Estimate depth using
-    pressure sensor
-          │
-          ▼
- Measure seabed distance
-  using ultrasonic sensor
-          │
-          ▼
- Monitor motion and
- orientation using IMU
-          │
-          ▼
- Maintain survey altitude
-          │
-          ▼
- ┌─────────────────────┐
- │ → → → → → → → → →   │
- │                     │
- │  ← ← ← ← ← ← ← ← ←  │
- │                     │
- │ → → → → → → → → →   │
- │                     │
- │  ← ← ← ← ← ← ← ← ←  │
- └─────────────────────┘
-          │
-          ▼
- Collect sensor data
-          │
-          ▼
-    Generate heat map
-svg
-```
+![Flowchart_1](medias/Flowchart_1.png)
 
 ---
 
@@ -93,15 +63,21 @@ svg
 
 VARUN uses **four thrusters** arranged to provide controlled underwater movement and orientation.
 
+![Thruster](medias/Thruster.png)
+
 ### Horizontal Thrusters
 
 Two horizontally mounted thrusters are positioned on the left and right sides of the vehicle.
 
 Their primary purpose is to provide **yaw control**, allowing VARUN to rotate and change its heading during navigation and while following the survey pattern.
 
+![Horizontal_Thrusters](medias/Horizontal_Thrusters.png)
+
 ### Vertical Thrusters
 
 Two vertically mounted thrusters are positioned approximately along the central region of the vehicle, with one toward the front and one toward the rear.
+
+![Vertical_Thrusters](medias/Vertical_Thrusters.png)
 
 These thrusters provide **vertical control**, allowing the vehicle to adjust its depth and pitch while maintaining its desired operating altitude above the seabed.
 
@@ -126,6 +102,8 @@ P = ρgh
 svg
 ```
 
+![Pressure_Formula](medias/Pressure_Formula.jpeg)
+
 where:
 
 * `P` = hydrostatic pressure
@@ -146,6 +124,8 @@ This provides VARUN with an estimate of its **depth below the water surface** du
 
 The underwater ultrasonic sensors are used to measure the **distance between VARUN and the seabed**.
 
+![Ultrasonic_Sensor](medias/Underwater_Ultrasonic_Sensor.jpg)
+
 Unlike the pressure sensor, which provides an estimate of the vehicle's depth in the water column, the ultrasonic sensors provide a direct measurement of the distance to the seabed beneath the vehicle.
 
 This measurement is used to help VARUN maintain a **specific operating distance above the seabed** while conducting its survey.
@@ -155,6 +135,8 @@ By continuously monitoring the seabed distance, the vehicle can account for chan
 ### IMU-Based Motion & Orientation Measurement
 
 VARUN also incorporates an **Inertial Measurement Unit (IMU)** to monitor the vehicle's motion and orientation.
+
+![IMU_Sensor](medias/IMU_Sensor_Geometry.jpg)
 
 The IMU provides measurements such as:
 
@@ -173,6 +155,8 @@ The combination of pressure-based depth estimation, ultrasonic seabed-distance m
 
 **Water Depth + Seabed Distance + Motion + Orientation**
 
+![Depth_and_Altitude](medias/Depth_and_Altitude.png)
+
 This allows the system to distinguish between its overall depth in the water column, its relative height above the seabed, and its current motion and orientation while navigating through the survey area.
 
 ---
@@ -180,6 +164,8 @@ This allows the system to distinguish between its overall depth in the water col
 ## Water Temperature Measurement
 
 VARUN also incorporates an **underwater temperature sensor** to measure the temperature of the surrounding water at the vehicle's current operating level.
+
+![Temperature_Sensor](medias/Temperature_Sensor.jpeg)
 
 During a survey, the temperature sensor can continuously record the water temperature along with other collected measurements.
 
@@ -196,7 +182,11 @@ The vehicle incorporates separate **ballast and buoyancy chambers**:
 * **Ballast tanks** are positioned toward the lower portion of the vehicle.
 * **Buoyancy tanks** are positioned toward the upper portion.
 
+![COM_and_Buoyancy](medias/MC_COM_Buoyancy.gif)
+
 This arrangement is intended to naturally distribute the vehicle's mass and buoyancy around its vertical axis, helping VARUN maintain a more stable orientation in water.
+
+![COM_and_Buoyancy_2](medias/MC_COM_Buoyancy_2.gif)
 
 The design aims to reduce unnecessary corrective thrust and make it easier for the vehicle to maintain a consistent surveying position above the seabed.
 
@@ -210,6 +200,9 @@ VARUN incorporates a dedicated **waterproof camera chamber** containing:
 
 * An underwater camera
 * Two onboard lights
+
+![Camera](medias/Camera.webp)
+![Lights](medias/Lights.jpeg)
 
 The camera provides a live visual view of the underwater environment, allowing the operator to observe the seabed, verify the vehicle's position, and monitor the survey area.
 
@@ -280,40 +273,7 @@ The final output is envisioned as a map showing **where detectable metal-rich de
 
 At a high level, VARUN can be divided into the following subsystems:
 
-```text
-                         VARUN
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-          ▼                ▼                ▼
-     Propulsion         Sensing           Vision
-          │                │                │
-     4 Thrusters    ┌──────┼──────┐       Camera
-          │         │      │      │         │
-          │         ▼      ▼      ▼         │
-          │      Metal  Pressure  Temp.     │
-          │      Detect. Sensor   Sensor    │
-          │                │                │
-          │                ▼                │
-          │          Ultrasonic             │
-          │          Seabed Distance        │
-          │                │                │
-          │                ▼                │
-          │              IMU                │
-          │         Motion & Orientation    │
-          │                │                │
-          └────────────────┼────────────────┘
-                           │
-                           ▼
-                  Control & Processing
-                           │
-                           ▼
-                      Survey Data
-                           │
-                           ▼
-                       Heat Map
-svg
-```
+![Flowchart_2](medias/Flowchart_2.png)
 
 This architecture brings together the vehicle's **propulsion, sensing, depth measurement, seabed-distance measurement, motion and orientation monitoring, temperature monitoring, vision, control, and data processing** into a single underwater surveying platform.
 
