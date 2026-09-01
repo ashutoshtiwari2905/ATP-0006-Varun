@@ -70,11 +70,11 @@ These measurements can subsequently be converted into a spatial representation s
           │
           ▼
  ┌─────────────────────┐
- │ → → → → → → → → →  │
+ │ → → → → → → → → →   │
  │                     │
  │  ← ← ← ← ← ← ← ← ←  │
  │                     │
- │ → → → → → → → → →  │
+ │ → → → → → → → → →   │
  │                     │
  │  ← ← ← ← ← ← ← ← ←  │
  └─────────────────────┘
